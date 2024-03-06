@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import re
+
 class MyString:
     def __init__(self, value = ""):
       self.value = value
@@ -25,6 +27,6 @@ class MyString:
         return self.value.endswith('!')
     
     def count_sentences(self):
-        sentence_end_punctuation = ['.', '!', '?']
-        sentence_count = sum(1 for i, char in enumerate(self.value) if char in sentence_end_punctuation and (i == len(self.value) - 1 or self.value[i+1] not in sentence_end_punctuation))
-        return sentence_count
+        cleaned_value = self.value.replace('..', '.').replace('!!', '!').replace('??', '?')
+        sentences = [sentence for sentence in re.split(r'[.!?]', cleaned_value) if sentence]
+        return len(sentences)
